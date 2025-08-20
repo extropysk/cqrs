@@ -1,5 +1,5 @@
 {
-  "name": "@extropysk/payload",
+  "name": "@extropysk/cqrs",
   "version": "1.0.0",
   "private": false,
   "publishConfig": {
@@ -7,14 +7,14 @@
   },
   "license": "MIT",
   "type": "module",
-  "main": "./dist/payload.umd.cjs",
-  "module": "./dist/payload.js",
+  "main": "./dist/cqrs.umd.cjs",
+  "module": "./dist/cqrs.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/payload.js",
-      "require": "./dist/payload.umd.cjs"
+      "import": "./dist/cqrs.js",
+      "require": "./dist/cqrs.umd.cjs"
     }
   },
   "scripts": {
