@@ -16,7 +16,7 @@ export class KillDragonCommand extends Command<{
 export class KillDragonHandler implements ICommandHandler<KillDragonCommand> {
   constructor() {}
 
-  async execute(command: KillDragonCommand) {
+  async execute(_command: KillDragonCommand) {
     return {
       actionId: 'TT',
     }

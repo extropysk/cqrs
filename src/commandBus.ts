@@ -25,20 +25,6 @@ export class CommandBus<CommandBase extends ICommand = ICommand>
    * @param context The context to use. Optional.
    * @returns A promise that, when resolved, will contain the result returned by the command's handler.
    */
-  execute<R = void>(command: Command<R>): Promise<R>
-  /**
-   * Executes a command.
-   * @param command The command to execute.
-   * @param context The context to use. Optional.
-   * @returns A promise that, when resolved, will contain the result returned by the command's handler.
-   */
-  execute<T extends CommandBase, R = any>(command: T): Promise<R>
-  /**
-   * Executes a command.
-   * @param command The command to execute.
-   * @param context The context to use. Optional.
-   * @returns A promise that, when resolved, will contain the result returned by the command's handler.
-   */
   execute<T extends CommandBase, R = any>(command: T): Promise<R> {
     const commandName = command.constructor.name
     const handler = this.handlers.get(commandName)

@@ -10,7 +10,7 @@ export class HeroKilledDragonEvent {
 }
 
 export class HeroKilledDragonHandler implements IEventHandler<HeroKilledDragonEvent> {
-  handle(event: HeroKilledDragonEvent) {
+  handle(_event: HeroKilledDragonEvent) {
     console.log('SOM')
   }
 }
