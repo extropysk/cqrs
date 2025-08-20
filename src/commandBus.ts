@@ -1,8 +1,6 @@
 import { CommandHandlerNotFoundException } from './errors/commandNotFound'
-import { Command, ICommand, ICommandBus, ICommandHandler } from './types'
+import { Command, Constructor, ICommand, ICommandBus, ICommandHandler } from './types'
 import { EventEmitter } from 'events'
-
-type CommandConstructor = new (...args: any[]) => ICommand
 
 export class CommandBus<CommandBase extends ICommand = ICommand>
   extends EventEmitter
@@ -50,7 +48,7 @@ export class CommandBus<CommandBase extends ICommand = ICommand>
     return handler.execute(command)
   }
 
-  register(command: CommandConstructor, handler: ICommandHandler<CommandBase>) {
+  register(command: Constructor<ICommand>, handler: ICommandHandler<CommandBase>) {
     const commandName = command.name
 
     if (this.handlers.has(commandName)) {
