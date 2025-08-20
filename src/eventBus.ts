@@ -1,8 +1,8 @@
 import { Constructor, IEvent, IEventBus, IEventHandler } from './types'
-import { EventEmitter } from 'events'
+import { Observable } from './utils'
 
 export class EventBus<EventBase extends IEvent = IEvent>
-  extends EventEmitter
+  extends Observable
   implements IEventBus<EventBase>
 {
   constructor() {

@@ -1,9 +1,9 @@
 import { CommandHandlerNotFoundException } from './errors/commandNotFound'
 import { Command, Constructor, ICommand, ICommandBus, ICommandHandler } from './types'
-import { EventEmitter } from 'events'
+import { Observable } from './utils'
 
 export class CommandBus<CommandBase extends ICommand = ICommand>
-  extends EventEmitter
+  extends Observable
   implements ICommandBus<CommandBase>
 {
   private handlers: Map<string, ICommandHandler>
