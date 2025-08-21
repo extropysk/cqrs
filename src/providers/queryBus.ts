@@ -1,21 +1,13 @@
 import { QueryHandlerNotFoundException } from '../errors'
 import { Constructor } from '../types'
-import { IQuery, IQueryBus, IQueryHandler, IQueryPublisher, Query } from '../types'
+import { IQuery, IQueryBus, IQueryHandler, Query } from '../types'
 import { ObservableBus } from '../utils'
-import { DefaultQueryPubSub } from '../utils'
 
 export class QueryBus<QueryBase extends IQuery = IQuery>
   extends ObservableBus<QueryBase>
   implements IQueryBus<QueryBase>
 {
   private handlers = new Map<string, (query: QueryBase) => any>()
-  private _publisher: IQueryPublisher<QueryBase>
-
-  constructor() {
-    super()
-
-    this._publisher = new DefaultQueryPubSub<QueryBase>(this.subject$)
-  }
 
   /**
    * Executes a query.
@@ -37,7 +29,7 @@ export class QueryBus<QueryBase extends IQuery = IQuery>
     if (!handler) {
       throw new QueryHandlerNotFoundException(commandName)
     }
-    this._publisher.publish(query)
+    this.publisher.publish(query)
     return handler(query)
   }
 

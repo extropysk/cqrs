@@ -50,7 +50,3 @@ export interface IQueryBus<QueryBase extends IQuery = IQuery> {
    */
   execute<T extends QueryBase, TResult = any>(query: T): Promise<TResult>
 }
-
-export interface IQueryPublisher<QueryBase extends IQuery = IQuery> {
-  publish<T extends QueryBase = QueryBase>(query: T): any
-}

@@ -53,7 +53,3 @@ export interface ICommandBus<CommandBase extends ICommand = ICommand> {
    */
   execute<T extends CommandBase, R = any>(command: T): Promise<R>
 }
-
-export interface ICommandPublisher<CommandBase extends ICommand = ICommand> {
-  publish<T extends CommandBase = CommandBase>(command: T): any
-}

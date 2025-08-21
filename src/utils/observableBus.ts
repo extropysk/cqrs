@@ -1,14 +1,15 @@
 import { Observable, Subject } from 'rxjs'
+import { IPublisher } from '../types'
+import { DefaultPubSub } from './defaultPubSub'
 
-export class ObservableBus<T> extends Observable<T> {
-  protected _subject$ = new Subject<T>()
+export class ObservableBus<T> {
+  protected readonly subject$ = new Subject<T>()
+  protected readonly publisher: IPublisher<T>
+
+  public readonly events$: Observable<T>
 
   constructor() {
-    super()
-    this.source = this._subject$
-  }
-
-  public get subject$() {
-    return this._subject$
+    this.publisher = new DefaultPubSub(this.subject$)
+    this.events$ = this.subject$.asObservable()
   }
 }

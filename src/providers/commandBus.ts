@@ -1,26 +1,12 @@
 import { CommandHandlerNotFoundException } from '../errors'
-import {
-  Command,
-  Constructor,
-  ICommand,
-  ICommandBus,
-  ICommandHandler,
-  ICommandPublisher,
-} from '../types'
+import { Command, Constructor, ICommand, ICommandBus, ICommandHandler } from '../types'
 import { ObservableBus } from '../utils'
-import { DefaultCommandPubSub } from '../utils'
 
 export class CommandBus<CommandBase extends ICommand = ICommand>
   extends ObservableBus<CommandBase>
   implements ICommandBus<CommandBase>
 {
   private handlers = new Map<string, (command: CommandBase) => any>()
-  private _publisher: ICommandPublisher<CommandBase>
-
-  constructor() {
-    super()
-    this._publisher = new DefaultCommandPubSub<CommandBase>(this.subject$)
-  }
 
   /**
    * Executes a command.
@@ -40,7 +26,7 @@ export class CommandBus<CommandBase extends ICommand = ICommand>
     if (!handler) {
       throw new CommandHandlerNotFoundException(commandName)
     }
-    this._publisher.publish(command)
+    this.publisher.publish(command)
     return handler(command)
   }
 
