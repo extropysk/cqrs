@@ -1,16 +1,25 @@
-import { CommandHandlerNotFoundException } from './errors/commandNotFound'
-import { Command, Constructor, ICommand, ICommandBus, ICommandHandler } from './types'
-import { Observable } from './utils'
+import { CommandHandlerNotFoundException } from './errors'
+import {
+  Command,
+  Constructor,
+  ICommand,
+  ICommandBus,
+  ICommandHandler,
+  ICommandPublisher,
+} from './types'
+import { ObservableBus } from './utils'
+import { DefaultCommandPubSub } from './utils/defaultPubSub'
 
 export class CommandBus<CommandBase extends ICommand = ICommand>
-  extends Observable
+  extends ObservableBus<CommandBase>
   implements ICommandBus<CommandBase>
 {
-  private handlers: Map<string, ICommandHandler>
+  private handlers = new Map<string, (command: CommandBase) => any>()
+  private _publisher: ICommandPublisher<CommandBase>
 
   constructor() {
     super()
-    this.handlers = new Map()
+    this._publisher = new DefaultCommandPubSub<CommandBase>(this.subject$)
   }
 
   /**
@@ -27,11 +36,16 @@ export class CommandBus<CommandBase extends ICommand = ICommand>
    */
   execute<T extends CommandBase, R = any>(command: T): Promise<R> {
     const commandName = command.constructor.name
-    const handler = this.handlers.get(commandName)
-    if (!handler) {
+    const executeFn = this.handlers.get(commandName)
+    if (!executeFn) {
       throw new CommandHandlerNotFoundException(commandName)
     }
-    return handler.execute(command)
+    this._publisher.publish(command)
+    return executeFn(command)
+  }
+
+  bind<T extends CommandBase>(handler: ICommandHandler<T>, id: string) {
+    this.handlers.set(id, command => handler.execute(command as T & Command<unknown>))
   }
 
   register(command: Constructor<ICommand>, handler: ICommandHandler<CommandBase>) {
@@ -43,6 +57,6 @@ export class CommandBus<CommandBase extends ICommand = ICommand>
       )
     }
 
-    this.handlers.set(commandName, handler)
+    this.bind(handler, commandName)
   }
 }

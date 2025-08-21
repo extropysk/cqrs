@@ -1,37 +1,58 @@
-import { Constructor, IEvent, IEventBus, IEventHandler } from './types'
-import { Observable } from './utils'
+import { catchError, defer, filter, mergeMap, of, Subscription } from 'rxjs'
+import { Constructor, IEvent, IEventBus, IEventHandler, IEventPublisher } from './types'
+import { ObservableBus } from './utils'
+import { DefaultPubSub } from './utils/defaultPubSub'
 
 export class EventBus<EventBase extends IEvent = IEvent>
-  extends Observable
+  extends ObservableBus<EventBase>
   implements IEventBus<EventBase>
 {
+  private _publisher: IEventPublisher<EventBase>
+  protected readonly subscriptions: Subscription[]
+
   constructor() {
     super()
-    // Increase max listeners for high-throughput scenarios
-    this.setMaxListeners(100)
+    this.subscriptions = []
+    this._publisher = new DefaultPubSub<EventBase>(this.subject$)
+  }
+
+  bind(handler: IEventHandler<EventBase>, id: string) {
+    const deferred = (event: EventBase) => () => {
+      return Promise.resolve(handler.handle(event))
+    }
+
+    const subscription = this.subject$
+      .pipe(
+        filter(event => {
+          return event.constructor.name === id
+        }),
+      )
+      .pipe(
+        mergeMap(event =>
+          defer(deferred(event)).pipe(
+            catchError(error => {
+              // if (this.options?.rethrowUnhandled) {
+              //   throw error
+              // }
+
+              console.error(
+                `"${handler.constructor.name}" has thrown an unhandled exception.`,
+                error,
+              )
+              return of()
+            }),
+          ),
+        ),
+      )
+      .subscribe()
+
+    this.subscriptions.push(subscription)
   }
 
   register(event: Constructor<IEvent>, handler: IEventHandler) {
     const eventName = event.name
 
-    this.on(eventName, async event => {
-      try {
-        await handler.handle(event)
-        // this.emit('event.handled', {
-        //   event,
-        //   handler: handler.constructor.name,
-        //   timestamp: new Date(),
-        // })
-      } catch (error) {
-        // this.emit('event.error', {
-        //   event,
-        //   error,
-        //   handler: handler.constructor.name,
-        //   timestamp: new Date(),
-        // })
-        console.error(`Error handling event ${eventName}:`, error)
-      }
-    })
+    this.bind(handler, eventName)
   }
 
   /**
@@ -39,7 +60,6 @@ export class EventBus<EventBase extends IEvent = IEvent>
    * @param event The event to publish.
    */
   publish<TEvent extends EventBase>(event: TEvent) {
-    const eventName = event.constructor.name
-    this.emit(eventName, event)
+    return this._publisher.publish(event)
   }
 }

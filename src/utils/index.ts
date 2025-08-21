@@ -1,1 +1,1 @@
-export * from './observable'
+export * from './observableBus'

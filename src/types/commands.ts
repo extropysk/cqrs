@@ -1,4 +1,4 @@
-export const RESULT_TYPE_SYMBOL = Symbol('RESULT_TYPE')
+const RESULT_TYPE_SYMBOL = Symbol('RESULT_TYPE')
 
 export interface ICommand {}
 
@@ -52,4 +52,8 @@ export interface ICommandBus<CommandBase extends ICommand = ICommand> {
    * @returns A promise that, when resolved, will contain the result returned by the command's handler.
    */
   execute<T extends CommandBase, R = any>(command: T): Promise<R>
+}
+
+export interface ICommandPublisher<CommandBase extends ICommand = ICommand> {
+  publish<T extends CommandBase = CommandBase>(command: T): any
 }
