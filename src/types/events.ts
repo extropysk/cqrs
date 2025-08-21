@@ -20,6 +20,12 @@ export interface IEventBus<EventBase extends IEvent = IEvent> {
    * @param event The event to publish.
    */
   publish<TEvent extends EventBase>(event: TEvent): any
+
+  /**
+   * Publishes multiple events.
+   * @param events The events to publish.
+   */
+  publishAll<TEvent extends EventBase>(events: TEvent[]): any
 }
 
 export interface IEventPublisher<EventBase extends IEvent = IEvent> {

@@ -36,12 +36,12 @@ export class CommandBus<CommandBase extends ICommand = ICommand>
    */
   execute<T extends CommandBase, R = any>(command: T): Promise<R> {
     const commandName = command.constructor.name
-    const executeFn = this.handlers.get(commandName)
-    if (!executeFn) {
+    const handler = this.handlers.get(commandName)
+    if (!handler) {
       throw new CommandHandlerNotFoundException(commandName)
     }
     this._publisher.publish(command)
-    return executeFn(command)
+    return handler(command)
   }
 
   bind<T extends CommandBase>(handler: ICommandHandler<T>, id: string) {

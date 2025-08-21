@@ -62,4 +62,15 @@ export class EventBus<EventBase extends IEvent = IEvent>
   publish<TEvent extends EventBase>(event: TEvent) {
     return this._publisher.publish(event)
   }
+
+  /**
+   * Publishes multiple events.
+   * @param events The events to publish.
+   */
+  publishAll<TEvent extends EventBase>(events: TEvent[]) {
+    if (this._publisher.publishAll) {
+      return this._publisher.publishAll(events)
+    }
+    return (events || []).map(event => this._publisher.publish(event))
+  }
 }
