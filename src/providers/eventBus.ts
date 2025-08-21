@@ -1,7 +1,7 @@
 import { catchError, defer, filter, mergeMap, of, Subscription } from 'rxjs'
 import { Constructor, IEvent, IEventBus, IEventHandler, IEventPublisher } from '../types'
 import { ObservableBus } from '../utils'
-import { DefaultPubSub } from '../utils/defaultPubSub'
+import { DefaultPubSub } from '../utils'
 
 export class EventBus<EventBase extends IEvent = IEvent>
   extends ObservableBus<EventBase>

@@ -1,8 +1,8 @@
 import { QueryHandlerNotFoundException } from '../errors'
 import { Constructor } from '../types'
-import { IQuery, IQueryBus, IQueryHandler, IQueryPublisher, Query } from '../types/queries'
+import { IQuery, IQueryBus, IQueryHandler, IQueryPublisher, Query } from '../types'
 import { ObservableBus } from '../utils'
-import { DefaultQueryPubSub } from '../utils/defaultPubSub'
+import { DefaultQueryPubSub } from '../utils'
 
 export class QueryBus<QueryBase extends IQuery = IQuery>
   extends ObservableBus<QueryBase>

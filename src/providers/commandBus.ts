@@ -8,7 +8,7 @@ import {
   ICommandPublisher,
 } from '../types'
 import { ObservableBus } from '../utils'
-import { DefaultCommandPubSub } from '../utils/defaultPubSub'
+import { DefaultCommandPubSub } from '../utils'
 
 export class CommandBus<CommandBase extends ICommand = ICommand>
   extends ObservableBus<CommandBase>
