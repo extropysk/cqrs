@@ -1,4 +1,4 @@
-import { CommandHandlerNotFoundException } from './errors'
+import { CommandHandlerNotFoundException } from '../errors'
 import {
   Command,
   Constructor,
@@ -6,9 +6,9 @@ import {
   ICommandBus,
   ICommandHandler,
   ICommandPublisher,
-} from './types'
-import { ObservableBus } from './utils'
-import { DefaultCommandPubSub } from './utils/defaultPubSub'
+} from '../types'
+import { ObservableBus } from '../utils'
+import { DefaultCommandPubSub } from '../utils/defaultPubSub'
 
 export class CommandBus<CommandBase extends ICommand = ICommand>
   extends ObservableBus<CommandBase>

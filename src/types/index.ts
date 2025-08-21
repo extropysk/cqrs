@@ -1,3 +1,4 @@
 export * from './commands'
 export * from './events'
 export * from './objects'
+export * from './queries'
