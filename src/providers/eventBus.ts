@@ -22,7 +22,7 @@ export class EventBus<EventBase extends IEvent = IEvent>
     const subscription = this.subject$
       .pipe(
         filter(event => {
-          return event.constructor.name === id
+          return event.resolveName() === id
         }),
       )
       .pipe(
@@ -33,10 +33,7 @@ export class EventBus<EventBase extends IEvent = IEvent>
               //   throw error
               // }
 
-              console.error(
-                `"${handler.constructor.name}" has thrown an unhandled exception.`,
-                error,
-              )
+              console.error(`"${handler.resolveName()}" has thrown an unhandled exception.`, error)
               return of()
             }),
           ),
