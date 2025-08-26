@@ -4,6 +4,10 @@ import { HeroKilledDragonEvent } from '../events/heroKilledDragon.event'
 import { KillDragonCommand } from './killDragon.command'
 
 export class KillDragonHandler implements ICommandHandler<KillDragonCommand> {
+  resolveName(): string {
+    return KillDragonCommand.name
+  }
+
   async execute(command: KillDragonCommand) {
     const { heroId, dragonId } = command
 

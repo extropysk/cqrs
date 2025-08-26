@@ -1,5 +1,4 @@
 import { QueryHandlerNotFoundException } from '../errors'
-import { Constructor } from '../types'
 import { IQuery, IQueryBus, IQueryHandler, Query } from '../types'
 import { ObservableBus } from '../utils'
 
@@ -24,7 +23,7 @@ export class QueryBus<QueryBase extends IQuery = IQuery>
    * @param query The query to execute.
    */
   async execute<T extends QueryBase, TResult = any>(query: T): Promise<TResult> {
-    const commandName = query.constructor.name
+    const commandName = query.resolveName()
     const handler = this.handlers.get(commandName)
     if (!handler) {
       throw new QueryHandlerNotFoundException(commandName)
@@ -37,8 +36,8 @@ export class QueryBus<QueryBase extends IQuery = IQuery>
     this.handlers.set(id, command => handler.execute(command as T & Query<unknown>))
   }
 
-  register(query: Constructor<IQuery>, handler: IQueryHandler<QueryBase>) {
-    const queryName = query.name
+  register(handler: IQueryHandler<QueryBase>) {
+    const queryName = handler.resolveName()
 
     if (this.handlers.has(queryName)) {
       console.warn(

@@ -5,6 +5,10 @@ import { GetHeroQuery } from './getHero.query'
 export class GetHeroHandler implements IQueryHandler<GetHeroQuery> {
   constructor(private repository: HeroRepository) {}
 
+  resolveName(): string {
+    return GetHeroQuery.name
+  }
+
   async execute(query: GetHeroQuery) {
     return this.repository.findOneById(query.heroId)
   }

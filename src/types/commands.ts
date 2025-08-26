@@ -1,14 +1,20 @@
 const RESULT_TYPE_SYMBOL = Symbol('RESULT_TYPE')
 
-export interface ICommand {}
+export interface ICommand {
+  resolveName(): string
+}
 
 /**
  * Utility type to extract the result type of a command.
  */
 export type CommandResult<C extends Command<unknown>> = C extends Command<infer R> ? R : never
 
-export class Command<T> implements ICommand {
+export abstract class Command<T> implements ICommand {
   readonly [RESULT_TYPE_SYMBOL]: T
+
+  resolveName(): string {
+    return this.constructor.name
+  }
 }
 
 /**
@@ -25,6 +31,7 @@ export type ICommandHandler<TCommand extends ICommand = any, TResult = any> =
          * @param command The command to execute.
          */
         execute(command: TCommand): Promise<InferredCommandResult>
+        resolveName(): string
       }
     : {
         /**
@@ -32,6 +39,7 @@ export type ICommandHandler<TCommand extends ICommand = any, TResult = any> =
          * @param command The command to execute.
          */
         execute(command: TCommand): Promise<TResult>
+        resolveName(): string
       }
 
 /**

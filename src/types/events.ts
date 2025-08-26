@@ -1,4 +1,12 @@
-export interface IEvent {}
+export interface IEvent {
+  resolveName(): string
+}
+
+export abstract class BaseEvent implements IEvent {
+  resolveName(): string {
+    return this.constructor.name
+  }
+}
 
 /**
  * Represents an event handler.
@@ -9,6 +17,7 @@ export interface IEventHandler<T extends IEvent = any> {
    * @param event The event to handle.
    */
   handle(event: T): any
+  resolveName(): string
 }
 
 /**

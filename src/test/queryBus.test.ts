@@ -8,7 +8,7 @@ const queryBus = new QueryBus()
 
 beforeAll(async () => {
   const heroRepository = new HeroRepository()
-  queryBus.register(GetHeroQuery, new GetHeroHandler(heroRepository))
+  queryBus.register(new GetHeroHandler(heroRepository))
 })
 
 test('get hero query', async () => {

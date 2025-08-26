@@ -1,5 +1,5 @@
 import { CommandHandlerNotFoundException } from '../errors'
-import { Command, Constructor, ICommand, ICommandBus, ICommandHandler } from '../types'
+import { Command, ICommand, ICommandBus, ICommandHandler } from '../types'
 import { ObservableBus } from '../utils'
 
 export class CommandBus<CommandBase extends ICommand = ICommand>
@@ -21,7 +21,7 @@ export class CommandBus<CommandBase extends ICommand = ICommand>
    * @returns A promise that, when resolved, will contain the result returned by the command's handler.
    */
   execute<T extends CommandBase, R = any>(command: T): Promise<R> {
-    const commandName = command.constructor.name
+    const commandName = command.resolveName()
     const handler = this.handlers.get(commandName)
     if (!handler) {
       throw new CommandHandlerNotFoundException(commandName)
@@ -34,8 +34,8 @@ export class CommandBus<CommandBase extends ICommand = ICommand>
     this.handlers.set(id, command => handler.execute(command as T & Command<unknown>))
   }
 
-  register(command: Constructor<ICommand>, handler: ICommandHandler<CommandBase>) {
-    const commandName = command.name
+  register(handler: ICommandHandler<CommandBase>) {
+    const commandName = handler.resolveName()
 
     if (this.handlers.has(commandName)) {
       console.warn(

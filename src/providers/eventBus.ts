@@ -1,5 +1,5 @@
 import { catchError, defer, filter, mergeMap, of, Subscription } from 'rxjs'
-import { Constructor, IEvent, IEventBus, IEventHandler } from '../types'
+import { IEvent, IEventBus, IEventHandler } from '../types'
 import { ObservableBus } from '../utils'
 
 export class EventBus<EventBase extends IEvent = IEvent>
@@ -47,8 +47,8 @@ export class EventBus<EventBase extends IEvent = IEvent>
     this.subscriptions.push(subscription)
   }
 
-  register(event: Constructor<IEvent>, handler: IEventHandler) {
-    const eventName = event.name
+  register(handler: IEventHandler) {
+    const eventName = handler.resolveName()
 
     this.bind(handler, eventName)
   }
