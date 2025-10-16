@@ -1,5 +1,5 @@
-import { IEventHandler } from '../../types'
-import { HeroKilledDragonEvent } from './heroKilledDragon.event'
+import { IEventHandler } from '@/types'
+import { HeroKilledDragonEvent } from '@/test/events/heroKilledDragon.event'
 
 export class HeroKilledDragonHandler implements IEventHandler<HeroKilledDragonEvent> {
   resolveName(): string {

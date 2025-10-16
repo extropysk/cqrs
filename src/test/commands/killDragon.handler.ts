@@ -1,7 +1,7 @@
-import { ICommandHandler } from '../../types'
-import { eventBus } from '../eventBus'
-import { HeroKilledDragonEvent } from '../events/heroKilledDragon.event'
-import { KillDragonCommand } from './killDragon.command'
+import { ICommandHandler } from '@/types'
+import { eventBus } from '@/test/eventBus'
+import { HeroKilledDragonEvent } from '@/test/events/heroKilledDragon.event'
+import { KillDragonCommand } from '@/test/commands/killDragon.command'
 
 export class KillDragonHandler implements ICommandHandler<KillDragonCommand> {
   resolveName(): string {

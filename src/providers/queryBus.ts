@@ -1,6 +1,6 @@
-import { QueryHandlerNotFoundException } from '../errors'
-import { IQuery, IQueryBus, IQueryHandler, Query } from '../types'
-import { ObservableBus } from '../utils'
+import { QueryHandlerNotFoundException } from '@/errors'
+import { IQuery, IQueryBus, IQueryHandler, Query } from '@/types'
+import { ObservableBus } from '@/utils'
 
 export class QueryBus<QueryBase extends IQuery = IQuery>
   extends ObservableBus<QueryBase>

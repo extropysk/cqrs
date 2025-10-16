@@ -1,4 +1,4 @@
-import { BaseEvent } from '../../types'
+import { BaseEvent } from '@/types'
 
 export class HeroKilledDragonEvent extends BaseEvent {
   constructor(

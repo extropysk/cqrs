@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs'
-import { IPublisher } from '../types'
-import { DefaultPubSub } from './defaultPubSub'
+import { IPublisher } from '@/types'
+import { DefaultPubSub } from '@/utils/defaultPubSub'
 
 export class ObservableBus<T> {
   protected readonly subject$ = new Subject<T>()

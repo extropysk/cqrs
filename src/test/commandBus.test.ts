@@ -1,9 +1,9 @@
 import { beforeAll, expect, test } from 'vitest'
-import { CommandBus } from '../providers'
-import { KillDragonCommand } from './commands/killDragon.command'
-import { KillDragonHandler } from './commands/killDragon.handler'
-import { eventBus } from './eventBus'
-import { HeroKilledDragonHandler } from './events/heroKilledDragon.handler'
+import { CommandBus } from '@/providers'
+import { KillDragonCommand } from '@/test/commands/killDragon.command'
+import { KillDragonHandler } from '@/test/commands/killDragon.handler'
+import { eventBus } from '@/test/eventBus'
+import { HeroKilledDragonHandler } from '@/test/events/heroKilledDragon.handler'
 
 const commandBus = new CommandBus()
 

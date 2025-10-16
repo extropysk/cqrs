@@ -1,6 +1,6 @@
-import { IQueryHandler } from '../../types'
-import { HeroRepository } from '../repository/hero.repository'
-import { GetHeroQuery } from './getHero.query'
+import { IQueryHandler } from '@/types'
+import { HeroRepository } from '@/test/repository/hero.repository'
+import { GetHeroQuery } from '@/test/queries/getHero.query'
 
 export class GetHeroHandler implements IQueryHandler<GetHeroQuery> {
   constructor(private repository: HeroRepository) {}

@@ -1,8 +1,8 @@
 import { beforeAll, expect, test } from 'vitest'
-import { QueryBus } from '../providers'
-import { GetHeroQuery } from './queries/getHero.query'
-import { GetHeroHandler } from './queries/getHero.handler'
-import { HeroRepository } from './repository/hero.repository'
+import { QueryBus } from '@/providers'
+import { GetHeroQuery } from '@/test/queries/getHero.query'
+import { GetHeroHandler } from '@/test/queries/getHero.handler'
+import { HeroRepository } from '@/test/repository/hero.repository'
 
 const queryBus = new QueryBus()
 
