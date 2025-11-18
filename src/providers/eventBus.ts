@@ -65,4 +65,8 @@ export class EventBus<EventBase extends IEvent = IEvent>
   publishAll<TEvent extends EventBase>(events: TEvent[]) {
     return (events || []).map(event => this.publisher.publish(event))
   }
+
+  destroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe())
+  }
 }
