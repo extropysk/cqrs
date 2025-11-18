@@ -1,6 +1,6 @@
-import { CommandHandlerNotFoundException } from '../errors'
-import { Command, ICommand, ICommandBus, ICommandHandler } from '../types'
-import { ObservableBus } from '../utils'
+import { CommandHandlerNotFoundException } from '@/errors'
+import { Command, ICommand, ICommandBus, ICommandHandler } from '@/types'
+import { ObservableBus } from '@/utils'
 
 export class CommandBus<CommandBase extends ICommand = ICommand>
   extends ObservableBus<CommandBase>

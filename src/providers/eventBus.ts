@@ -1,6 +1,6 @@
 import { catchError, defer, filter, mergeMap, of, Subscription } from 'rxjs'
-import { IEvent, IEventBus, IEventHandler } from '../types'
-import { ObservableBus } from '../utils'
+import { IEvent, IEventBus, IEventHandler } from '@/types'
+import { ObservableBus } from '@/utils'
 
 export class EventBus<EventBase extends IEvent = IEvent>
   extends ObservableBus<EventBase>
