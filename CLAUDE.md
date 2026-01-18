@@ -15,6 +15,9 @@ yarn build
 yarn dev
 
 # Run tests
+yarn test:run
+
+# Run test in watch mode
 yarn test
 
 # Lint
