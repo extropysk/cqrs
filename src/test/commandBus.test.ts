@@ -32,7 +32,7 @@ describe('CommandBus', () => {
 
     expect(() => commandBus.execute(command)).toThrow(CommandHandlerNotFoundException)
     expect(() => commandBus.execute(command)).toThrow(
-      'No handler found for the command: "SimpleCommand"',
+      'No handler found for the command: "SimpleCommand".',
     )
   })
 
